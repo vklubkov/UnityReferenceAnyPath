@@ -1,0 +1,19 @@
+{
+    "name": "ReferenceAnyPath.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3f0c72de56811a9a1970604dee97acbf",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

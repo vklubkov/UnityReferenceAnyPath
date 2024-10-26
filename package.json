@@ -1,0 +1,33 @@
+{
+  "name": "com.vklubkov.referenceanypath",
+  "version": "1.0.0",
+  "unity": "2021.2",
+  "unityRelease": "18f1",
+  "displayName": "Reference Any Path",
+  "description": "Reference any file or folder from Unity Inspector, whether it's inside or outside your Unity project, and then retrieve the file path in your code",
+  "keywords": [
+    "Inspector",
+    "Reference",
+    "Path",
+    "File",
+    "Folder",
+    "Directory",
+    "Resource",
+    "Resources",
+    "StreamingAssets",
+    "Scene",
+    "Raw"
+  ],
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "license": "MIT",
+  "licensesUrl": "https://github.com/marked-one/UnityReferenceAnyPath/blob/main/LICENSE.md",
+  "changelogUrl": "https://github.com/marked-one/UnityReferenceAnyPath/releases",
+  "documentationUrl": "https://github.com/marked-one/UnityReferenceAnyPath",
+  "author": {
+    "name": "Vladimir Klubkov",
+    "email": "vladimir.gamedev@gmail.com",
+    "url": "https://github.com/marked-one"
+  }
+}
