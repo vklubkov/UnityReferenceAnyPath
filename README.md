@@ -1231,7 +1231,7 @@ Each of them not only unpacks the data just like `Path` does, but also checks th
 - `RelativePathUnsafe`
 - `AssetPathUnsafe`
 - `RuntimePathUnsafe`
-- 
+
 Unsafe methods simply return what is stored in a property; packing is the same as for `Path`.
 
 ---
