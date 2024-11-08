@@ -35,7 +35,8 @@ namespace ReferenceAnyPath {
             }
 
             if (GUI.Button(Layout.SelectorRect, _selectorLabel)) {
-                var absolutePath = Property.GetString(PropertyName._absolutePath).UnpackPathSimple();
+                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathSimple();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
                 OpenDialog.Open(absolutePath);
             }
 

@@ -5,7 +5,6 @@ namespace ReferenceAnyPath {
         _path,
         _object,
         _relativePath,
-        _absolutePath,
         _assetPath,
         _runtimePath,
         _error,

@@ -6,15 +6,19 @@ namespace ReferenceAnyPath {
         public override string Path => PathUnsafe.UnpackPathComplex();
 
 #if UNITY_EDITOR
-        public override string RelativePath =>
-            AbsolutePathUnsafe.UnpackPathSimple().DoesFolderExist()
-                ? RelativePathUnsafe.UnpackPathComplex()
-                : null;
+        public override string RelativePath {
+            get {
+                var unpackedRelativePath = RelativePathUnsafe.UnpackPathComplex();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return absolutePath.DoesPathExist() ? unpackedRelativePath : null;
+            }
+        }
 
         public override string AbsolutePath {
             get {
-                var unpackedAbsolutePath = AbsolutePathUnsafe.UnpackPathSimple();
-                return unpackedAbsolutePath.DoesFolderExist() ? unpackedAbsolutePath : null;
+                var unpackedRelativePath = RelativePathUnsafe.UnpackPathComplex();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return absolutePath.DoesPathExist() ? absolutePath : null;
             }
         }
 

@@ -11,7 +11,6 @@ namespace ReferenceAnyPath {
         protected override void OnBeforeSerialize(
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error) =>
@@ -19,7 +18,6 @@ namespace ReferenceAnyPath {
                 _object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error,
@@ -35,7 +33,6 @@ namespace ReferenceAnyPath {
         protected override void OnBeforeSerialize(
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error) =>
@@ -43,7 +40,6 @@ namespace ReferenceAnyPath {
                 _object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error,
@@ -59,7 +55,6 @@ namespace ReferenceAnyPath {
         protected override void OnBeforeSerialize(
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error) =>
@@ -67,7 +62,6 @@ namespace ReferenceAnyPath {
                 _object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error,
@@ -83,7 +77,6 @@ namespace ReferenceAnyPath {
         protected override void OnBeforeSerialize(
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error) =>
@@ -91,7 +84,6 @@ namespace ReferenceAnyPath {
                 _object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error,

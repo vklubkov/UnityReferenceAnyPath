@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-
 namespace ReferenceAnyPath {
     public abstract class Error<TValidator> where TValidator : Validator {
         protected Property Property { get; private set; }
@@ -16,15 +13,15 @@ namespace ReferenceAnyPath {
                 if (Property.IsError)
                     return true;
 
-                var absolutePath = Property.GetString(PropertyName._absolutePath).UnpackPathSimple();
+                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathSimple();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
                 if (string.IsNullOrEmpty(absolutePath)) {
                     var path = Property.GetString(PropertyName._path).UnpackPathComplex();
                     return !string.IsNullOrEmpty(path);
                 }
 
                 var assetPath = Property.GetString(PropertyName._assetPath).UnpackPathSimple();
-
-                return IsInvalidPath(absolutePath,assetPath);
+                return IsInvalidPath(absolutePath, assetPath);
             }
         }
 

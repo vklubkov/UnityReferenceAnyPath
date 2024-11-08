@@ -21,15 +21,19 @@ namespace ReferenceAnyPath {
         public override string Path => PathUnsafe.UnpackPathSimple();
 
 #if UNITY_EDITOR
-        public override string RelativePath =>
-            AbsolutePathUnsafe.UnpackPathSimple().DoesFileExist()
-                ? RelativePathUnsafe.UnpackPathSimple()
-                : null;
+        public override string RelativePath {
+            get {
+                var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return absolutePath.DoesFileExist() ? unpackedRelativePath : null;
+            }
+        }
 
         public override string AbsolutePath {
             get {
-                var unpackedAbsolutePath = AbsolutePathUnsafe.UnpackPathSimple();
-                return unpackedAbsolutePath.DoesFileExist() ? unpackedAbsolutePath : null;
+                var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return absolutePath.DoesFileExist() ? absolutePath : null;
             }
         }
 
@@ -48,7 +52,6 @@ namespace ReferenceAnyPath {
         protected override void OnBeforeSerialize(
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error) =>
@@ -56,7 +59,6 @@ namespace ReferenceAnyPath {
                 _object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref _name,

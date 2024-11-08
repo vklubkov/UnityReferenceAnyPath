@@ -11,15 +11,19 @@ namespace ReferenceAnyPath {
         [SerializeField] string _extensions = string.Empty;
         // ReSharper restore UnusedMember.Local
 
-        public override string RelativePath =>
-            AbsolutePathUnsafe.UnpackPathSimple().DoesPathExist()
-                ? RelativePathUnsafe.UnpackPathComplex()
-                : null;
+        public override string RelativePath {
+            get {
+                var unpackedRelativePath = RelativePathUnsafe.UnpackPathComplex();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return absolutePath.DoesPathExist() ? unpackedRelativePath : null;
+            }
+        }
 
         public override string AbsolutePath {
             get {
-                var unpackedAbsolutePath = AbsolutePathUnsafe.UnpackPathSimple();
-                return unpackedAbsolutePath.DoesPathExist() ? unpackedAbsolutePath : null;
+                var unpackedRelativePath = RelativePathUnsafe.UnpackPathComplex();
+                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return absolutePath.DoesPathExist() ? absolutePath : null;
             }
         }
 

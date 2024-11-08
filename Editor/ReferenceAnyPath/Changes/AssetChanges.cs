@@ -34,7 +34,6 @@ namespace ReferenceAnyPath {
             var path = relativePath.PackPathComplex();
             Property.SetString(PropertyName._path, path);
             Property.SetString(PropertyName._relativePath, path);
-            Property.SetString(PropertyName._absolutePath, absolutePath.PackPathSimple());
             Property.SetString(PropertyName._assetPath, assetPath.PackPathSimple());
             Property.SetString(PropertyName._runtimePath, runtimePath.PackPathComplex());
         }

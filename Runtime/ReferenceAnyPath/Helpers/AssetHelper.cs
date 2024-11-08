@@ -12,14 +12,12 @@ namespace ReferenceAnyPath {
             UnityObject @object,
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error,
             Func<string, string> getRuntimePath) {
             PathHelper.OnBeforeSerialize(
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error);
@@ -29,7 +27,6 @@ namespace ReferenceAnyPath {
                 @object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error,
@@ -44,14 +41,12 @@ namespace ReferenceAnyPath {
             int bits,
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error,
             Func<string, string> getRuntimePath) {
             PathHelper.OnBeforeSerialize(
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error);
@@ -61,7 +56,6 @@ namespace ReferenceAnyPath {
                 @object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error,
@@ -75,15 +69,16 @@ namespace ReferenceAnyPath {
             }
 #endif
 
-            var unpackedAbsolutePath = absolutePath.UnpackPathSimple();
-            if (unpackedAbsolutePath != null && @object != null && (width <= 0 || height <= 0 || bits <= 0))
+            var unpackedRelativePath = relativePath.UnpackPathSimple();
+            if (unpackedRelativePath != null && @object != null && (width <= 0 || height <= 0 || bits <= 0)) {
                 error = true;
+            }
         }
 
 #if !REFERENCE_ANY_PATH_NO_VALIDATION_BEFORE_SERIALIZATION
         static void HandleMoveOrDelete(UnityObject @object,
-            ref string path, ref string relativePath, ref string absolutePath,
-            ref string assetPath, ref string runtimePath, ref bool error, Func<string, string> getRuntimePath) {
+            ref string path, ref string relativePath, ref string assetPath,
+            ref string runtimePath, ref bool error, Func<string, string> getRuntimePath) {
             var unpackedPath = path.UnpackPathComplex();
             if (string.IsNullOrEmpty(unpackedPath))
                 return; // Not set
@@ -126,7 +121,6 @@ namespace ReferenceAnyPath {
             // Asset was moved
             var newRelativePath = newAssetPath.GetRelativePathFromAssetPath();
             path = relativePath = newRelativePath.PackPathComplex();
-            absolutePath = newRelativePath.GetAbsolutePathFromRelativePath().PackPathSimple();
             assetPath = newAssetPath.PackPathSimple();
             runtimePath = getRuntimePath.Invoke(newAssetPath).PackPathComplex();
         }

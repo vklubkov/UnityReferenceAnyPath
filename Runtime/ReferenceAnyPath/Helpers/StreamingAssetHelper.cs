@@ -24,7 +24,6 @@ namespace ReferenceAnyPath {
             UnityObject @object,
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error,
@@ -32,8 +31,7 @@ namespace ReferenceAnyPath {
             RuntimeAssetHelper.OnBeforeSerialize(
                 @object, 
                 ref path,
-                ref relativePath, 
-                ref absolutePath,
+                ref relativePath,
                 ref assetPath,
                 ref runtimePath, 
                 ref error,
@@ -47,7 +45,6 @@ namespace ReferenceAnyPath {
             int bits,
             ref string path,
             ref string relativePath,
-            ref string absolutePath,
             ref string assetPath,
             ref string runtimePath,
             ref bool error,
@@ -56,7 +53,6 @@ namespace ReferenceAnyPath {
                 @object,
                 ref path,
                 ref relativePath,
-                ref absolutePath,
                 ref assetPath,
                 ref runtimePath,
                 ref error,
@@ -69,9 +65,8 @@ namespace ReferenceAnyPath {
                 return getRuntimePath.Invoke(unpackedAssetPath);
             }
 
-            var unpackedAbsolutePath = absolutePath.UnpackPathSimple();
-            if (unpackedAbsolutePath != null &&
-                @object != null &&
+            var unpackedRelativePath = relativePath.UnpackPathSimple();
+            if (unpackedRelativePath != null && @object != null &&
                 (width <= 0 || height <= 0 || bits <= 0 || bits % 8 != 0)) {
                 error = true;
             }

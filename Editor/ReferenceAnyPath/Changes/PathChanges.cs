@@ -24,7 +24,6 @@ namespace ReferenceAnyPath {
 
         void SetProperties(string relativePath, string absolutePath, string assetPath, string runtimePath) {
             Property.SetString(PropertyName._relativePath, relativePath.PackPathComplex());
-            Property.SetString(PropertyName._absolutePath, absolutePath.PackPathSimple());
             Property.SetString(PropertyName._assetPath, assetPath.PackPathSimple());
             Property.SetString(PropertyName._runtimePath, runtimePath.PackPathComplex());
         }
