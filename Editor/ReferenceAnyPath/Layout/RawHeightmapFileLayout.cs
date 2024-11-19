@@ -15,8 +15,7 @@ namespace ReferenceAnyPath {
         public Rect FlipLabelRect => _rawHeightmapLayout.FlipLabelRect;
         public Rect FlipValueRect=> _rawHeightmapLayout.FlipValueRect;
 
-        public override void Init(Rect position, GUIContent label) {
-            base.Init(position, label);
+        protected override void Initialize(Rect position, GUIContent label) {
             _rawHeightmapLayout.Init(InfoValueRect);
         }
 

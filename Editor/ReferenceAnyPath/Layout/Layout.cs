@@ -5,12 +5,11 @@ namespace ReferenceAnyPath {
     public abstract class Layout : ILayout {
        // Different versions of Unity handle the elements
        // to the left of the property rect differently.
-       // Here we adjust it for some.
-       // Note that not every Unity version was tested.
-#if UNITY_6000_0_21
-        const float _foldoutOffset = 15f;
-#elif UNITY_6000_0_OR_NEWER
-        const float _foldoutOffset = 0f;
+#if UNITY_6000_0_OR_NEWER
+        // Here, I officially give up on Unity 6.
+        // Feels like this changes every minor release, so let's just
+        // use a single value and simply update it when the new change is out.
+        const float _foldoutOffset = 13f;
 #elif UNITY_2022_2_OR_NEWER
         const float _foldoutOffset = 15f;
 #else
@@ -65,14 +64,19 @@ namespace ReferenceAnyPath {
         public GUIContent EmptyGuiContent => new((string)null);
         public GUIContent NoGuiContent => new();
 
-        public virtual void Init(Rect position, GUIContent label) {
+        public void Init(Rect position, GUIContent label) {
             _label = label;
+            position.x += _foldoutOffset;
+            position.width -= _foldoutOffset;
             InitInputRect(position);
             InitSelectorRect(position);
             InitFoldoutRect(position);
             InitInfoRect(position);
             InitInfoValueRect();
+            Initialize(position, label);
         }
+
+        protected abstract void Initialize(Rect position, GUIContent label);
 
         void InitInputRect(Rect position) {
             _inputRect.x = position.x;

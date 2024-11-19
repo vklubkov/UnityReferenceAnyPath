@@ -2,10 +2,10 @@
 using System;
 using System.IO;
 using UnityEditor;
+using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 #endif
 
 using UnityEngine;
-using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace ReferenceAnyPath {
     public static class StringExtensions {
@@ -146,7 +146,7 @@ namespace ReferenceAnyPath {
             var assetNameWithoutExtension = path.GetFileNameWithoutExtension();
             var sceneName = string.IsNullOrEmpty(parentPath)
                 ? assetNameWithoutExtension
-                : parentPath + '/' + assetNameWithoutExtension;
+                : parentPath + "/" + assetNameWithoutExtension;
 
             return string.IsNullOrEmpty(sceneName) ? null : sceneName;
         }
@@ -156,14 +156,12 @@ namespace ReferenceAnyPath {
                 return null;
 
             if (assetPath.StartsWith(_assets)) {
-                if (assetPath.Length == _assets.Length) {
+                if (assetPath.Length == _assets.Length)
                     return "."; // Assets folder itself
-                }
 
                 assetPath = assetPath.Remove(0, _assets.Length);
-                if (!assetPath.StartsWith('/')) {
+                if (!assetPath.StartsWith('/'))
                     return null; // Not in the Assets folder
-                }
 
                 var absolutePath = Application.dataPath + assetPath;
                 return absolutePath.GetRelativePath(); // An asset within the Assets folder
@@ -171,14 +169,12 @@ namespace ReferenceAnyPath {
 
             if (assetPath.StartsWith(_packages)) {
                 var processedAssetPath = assetPath.Remove(0, _packages.Length);
-                if (!processedAssetPath.StartsWith('/')) {
+                if (!processedAssetPath.StartsWith('/'))
                     return null; // Not a Package
-                }
 
                 processedAssetPath = processedAssetPath.Trim('/');
-                if (string.IsNullOrEmpty(processedAssetPath)) {
+                if (string.IsNullOrEmpty(processedAssetPath))
                     return null; // Not a Package
-                }
 
                 var packageInfo = PackageInfo.FindForAssetPath(assetPath);
                 if (packageInfo == null)
@@ -189,10 +185,11 @@ namespace ReferenceAnyPath {
                     return null; // Not a valid Package
 
                 var firstSeparatorPosition = processedAssetPath.IndexOf('/');
-                if (firstSeparatorPosition == -1)
+                if (firstSeparatorPosition == -1) {
                     return Path.IsPathRooted(packageRelativePath)
-                       ? packageRelativePath.GetRelativePath()
-                       : packageRelativePath; // Package folder itself
+                        ? packageRelativePath.GetRelativePath()
+                        : packageRelativePath; // Package folder itself
+                }
 
                 processedAssetPath = processedAssetPath.Remove(0, firstSeparatorPosition);
                 var path = packageRelativePath + processedAssetPath; // An asset within a Package
@@ -218,17 +215,17 @@ namespace ReferenceAnyPath {
             return Path.GetFullPath(Application.dataPath + "/" + path).ApplyUnitySeparators();
         }
 
-        static string GetParentPath(this string path) =>
+        public static string GetParentPath(this string path) =>
             Path.GetDirectoryName(path).ApplyUnitySeparators();
 
-        static string GetFileNameWithoutExtension(this string path) =>
+        public static string GetFileNameWithoutExtension(this string path) =>
             Path.GetFileNameWithoutExtension(path);
 
         public static string GetFileName(this string path) => Path.GetFileName(path);
 
         public static string ApplyUnitySeparators(this string path) {
 #if UNITY_EDITOR_WIN
-            return path.Replace('\\', '/');
+            return path?.Replace('\\', '/');
 #else
             return path;
 #endif

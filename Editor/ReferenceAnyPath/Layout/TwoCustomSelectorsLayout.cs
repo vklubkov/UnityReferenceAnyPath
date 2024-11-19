@@ -15,8 +15,7 @@ namespace ReferenceAnyPath {
         public Rect FileSelectorRect => _fileSelectorRect;
         public Rect FolderSelectorRect => _folderSelectorRect;
 
-        public override void Init(Rect position, GUIContent label) {
-            base.Init(position, label);
+        protected override void Initialize(Rect position, GUIContent label) {
             InitFileSelectorRect(position);
             InitFolderSelectorRect(position);
         }
