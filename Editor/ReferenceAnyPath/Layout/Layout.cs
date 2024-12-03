@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace ReferenceAnyPath {
     public abstract class Layout : ILayout {
-       // Different versions of Unity handle the elements
-       // to the left of the property rect differently.
+       // Different versions of Unity, including minor versions,
+       // handle foldout elements differently. Moreover,
+       // different types of elements aren't well aligned.
+       // So, the offset below is very basic and doesn't
+       // imply that the foldoiut is perfect everywhere.
 #if UNITY_6000_0_OR_NEWER
-        // Here, I officially give up on Unity 6.
-        // Feels like this changes every minor release, so let's just
-        // use a single value and simply update it when the new change is out.
-        const float _foldoutOffset = 13f;
+        const float _foldoutOffset = 0f;
 #elif UNITY_2022_2_OR_NEWER
         const float _foldoutOffset = 15f;
 #else
