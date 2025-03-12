@@ -63,10 +63,6 @@ public class YourBehaviour : MonoBehaviour {
 }
 ```
 
-## License
-
-[MIT](LICENSE.md)
-
 ## Limitations
 
 ### Unity version requirements
@@ -154,9 +150,9 @@ Non-asset paths are validated in a thread, to avoid blocking the Editor UI threa
 
 ## Installation
 
-- Via Unity Package Manager: press the plus sign and choose `Add package from git URL...`. There, use `https://github.com/marked-one/UnityReferenceAnyPath.git`, or, with version: `https://github.com/marked-one/UnityReferenceAnyPath#1.0.0`
+- Via Unity Package Manager: press the plus sign and choose `Add package from git URL...`. There, use `https://github.com/vklubkov/UnityReferenceAnyPath.git`, or, with version: `https://github.com/vklubkov/UnityReferenceAnyPath#1.1.0`
 - You can also clone this repository and then add it as a local package using `Add package from disk...` option.
-- Another way is to manually edit the `manifest.json` file in your `Packages` folder. Add `"com.vklubkov.referenceanypath" : "https://github.com/marked-one/UnityReferenceAnyPath.git"`, or, with version: `"com.vklubkov.referenceanypath" : "hhttps://github.com/marked-one/UnityReferenceAnyPath.git#1.0.0"`
+- Another way is to manually edit the `manifest.json` file in your `Packages` folder. Add `"com.vklubkov.referenceanypath" : "https://github.com/vklubkov/UnityReferenceAnyPath.git"`, or, with version: `"com.vklubkov.referenceanypath" : "hhttps://github.com/vklubkov/UnityReferenceAnyPath.git#1.1.0"`
 - Alternatively, you can download the package into your `Assets` folder
 
 ## Usage
@@ -1403,3 +1399,58 @@ Unsafe methods simply return what is stored in a property; packing is the same a
 - REFERENCE_ANY_PATH_NO_PARALLEL_CHECK_IN_INSPECTOR — removes non-asset paths validation from `PropertyDrawer`.
 
 - REFERENCE_ANY_PATH_FORCE_UNITASK — forces the use of UniTask for async/parallel operations. Only enable it if you have UniTask in your project. Also, I would probably suggest not using this at all, unless you have performance issues or some other issues with the tasks.
+
+
+## License
+
+[MIT](LICENSE.md)
+
+```
+Copyright (c) 2024-2025 Vladimir Klubkov
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+[Third Party Notices](Third%20Party%20Notices.md)
+
+Package was inspired by (and thus may contain some similarities to) [UnityResourceReference](https://github.com/paulhayes/UnityResourceReference) by Paul Hayes, distributed under MIT license:
+
+```
+The MIT License (MIT)
+
+Copyright (c) 2014 Paul Hayes
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```

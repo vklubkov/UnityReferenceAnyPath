@@ -1,6 +1,6 @@
 {
   "name": "com.vklubkov.referenceanypath",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "unity": "2021.2",
   "unityRelease": "18f1",
   "displayName": "Reference Any Path",
@@ -22,12 +22,11 @@
     "com.unity.nuget.newtonsoft-json": "3.2.1"
   },
   "license": "MIT",
-  "licensesUrl": "https://github.com/marked-one/UnityReferenceAnyPath/blob/main/LICENSE.md",
-  "changelogUrl": "https://github.com/marked-one/UnityReferenceAnyPath/releases",
-  "documentationUrl": "https://github.com/marked-one/UnityReferenceAnyPath",
+  "licensesUrl": "https://github.com/vklubkov/UnityReferenceAnyPath/blob/main/LICENSE.md",
+  "changelogUrl": "https://github.com/vklubkov/UnityReferenceAnyPath/releases",
+  "documentationUrl": "https://github.com/vklubkov/UnityReferenceAnyPath",
   "author": {
     "name": "Vladimir Klubkov",
-    "email": "vladimir.gamedev@gmail.com",
-    "url": "https://github.com/marked-one"
+    "url": "https://github.com/vklubkov"
   }
 }
