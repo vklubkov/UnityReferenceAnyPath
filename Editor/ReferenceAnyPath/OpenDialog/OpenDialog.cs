@@ -34,8 +34,21 @@ namespace ReferenceAnyPath {
             if (Directory.Exists(absolutePath))
                 return absolutePath;
 
+            var directoryPath = Path.GetDirectoryName(absolutePath);
+            if (string.IsNullOrEmpty(directoryPath))
+                return Application.dataPath;
+
             if (File.Exists(absolutePath))
-                return Path.GetDirectoryName(absolutePath);
+                return directoryPath;
+
+            directoryPath = Path.GetFullPath(directoryPath).ApplyUnitySeparators();
+            var projectPath = Path.GetDirectoryName(Application.dataPath).ApplyUnitySeparators();
+            while (directoryPath?.StartsWith(projectPath) ?? false) {
+                if (Directory.Exists(directoryPath))
+                    return directoryPath;
+
+                directoryPath = Path.GetDirectoryName(directoryPath).ApplyUnitySeparators();
+            }
 
             return Application.dataPath;
         }
