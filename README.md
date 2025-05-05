@@ -1,6 +1,61 @@
 # Reference Any Path in Unity
 
-Reference any file or folder from Unity Inspector, whether it's inside or outside your Unity project, and then retrieve the file path in your code:
+![Logo](.github/Logo.png)
+
+Reference any file or folder from Unity Inspector, whether it's inside or outside your Unity project, and then retrieve the file path in your code.
+
+![Showcase](.github/Showcase.png)
+
+With the help of **Reference Any Path** you can reference Scenes, Raw Heightmaps, Streaming Assets, Resources, Project Assets and nearly anything on your hard drive. Just add a serialized field to your `MonoBehaviour` or `ScriptableObject`, and then drag and drop file or folder either from Project tab of Unity Editor or simply from your system's file browser. The following references are supported:
+
+```csharp
+using ReferenceAnyPath;
+using UnityEngine;
+
+public class ReferenceAnyPathShowcase : MonoBehaviour {
+    [Header("Any path")]
+    [SerializeField] AnyPath _path; // Literally any path on your machine
+    [SerializeField] AnyFile _file; // Any file on your machine
+    [SerializeField] AnyFolder _folder; // Any folder on your machine
+    [Header("Project assets")]
+    [SerializeField] Asset _assetPath; // Any asset in your Unity project
+    [SerializeField] Asset<Material> _genericAsset; // Any asset of specifed type
+    [SerializeField] AssetFile _assetFile; // Any asset file
+    [SerializeField] AssetFolder _assetFolder; // Any asset folder
+    [Header("Runtime assets")]
+    [SerializeField] RuntimeAsset _runtimeAssetPath; // Any runtime asset (Resources, Streaming Assets, Scenes)
+    [SerializeField] Runtime<TextAsset> _genericRuntimeAsset; // Any runtime asset of specifed type
+    [SerializeField] RuntimeFile _runtimeFile; // Any runtime file
+    [SerializeField] RuntimeFolder _runtimeFolder; // Any runtime folder
+    [Header("Resources")]
+    [SerializeField] Resource _resourcePath; // Any resource
+    [SerializeField] Resource<GameObject> _genericResource; // Any resource of specifed type
+    [SerializeField] TextResource _textResource; // Any text resource
+    [SerializeField] BinaryResource _binaryResource; // Any binary resource (*.bytes)
+    [SerializeField] ResourceFile _resourceFile; // Any resource file
+    [SerializeField] ResourceFolder _resourceFolder; // Any resource folder
+    [Header("Streaming assets")]
+    [SerializeField] StreamingAsset _streamingAssetPath; // Any streaming asset
+    [SerializeField] TextStreamingAsset _textStreamingAsset; // Text streaming asset
+    [SerializeField] BinaryStreamingAsset _binaryStreamingAsset; // Binary streaming asset
+    [SerializeField] StreamingAssetFile _streamingAssetFile; // Any streaming asset file
+    [SerializeField] StreamingAssetFolder _streamingAssetFolder; // Any streaming asset folder
+    [Header("Scene")]
+    [SerializeField] Scene _scene; // Any scene
+    [Header("Raw heightmap")]
+    [SerializeField] RawHeightmapFile _rawHeightmapFile; // Any raw heightmap file on your machine
+    [SerializeField] RawHeightmapAsset _rawHeightmapAsset; // Any raw heightmap asset in yout project
+    [SerializeField] RawHeightmapRuntimeAsset _rawHeightmapRuntimeAsset; // Any raw heightmap runtime asset
+    [SerializeField] RawHeightmapResource _rawHeightmapResource; // Any raw heightmap resource
+    [SerializeField] RawHeightmapStreamingAsset _rawHeightmapStreamingAsset; // Any raw heightmap streaming asset
+}
+```
+
+Then in runtime (both in Editor and in Build) you can use the `Path` property to get the path to the referenced asset (if it is available in runtime).
+
+`AbsolutePath`, `RelativePath`, `AssetPath` & `RuntimePath` properties are designed for use in Editor.
+
+`null` value indicates that the path is not available. An empty string, on the other hand, is a valid path for folders.
 
 ```csharp
 public class YourBehaviour : MonoBehaviour {
@@ -19,143 +74,25 @@ public class YourBehaviour : MonoBehaviour {
 }
 ```
 
-Available types:
-
-```csharp
-using ReferenceAnyPath;
-using UnityEngine;
-
-public class YourBehaviour : MonoBehaviour {
-    [SerializeField] AnyPath _anyPathOnYourHardDrive;
-    [SerializeField] AnyFile _anyFileOnYourHardDrive;
-    [SerializeField] AnyFolder _anyFolderOnYourHardDrive;
-    [SerializeField] RawHeightmapFile _anyRawHeightmapFile;
-
-    [SerializeField] Asset _anyAssetInYourProject;
-    [SerializeField] AssetFile _anyFileInYourProject;
-    [SerializeField] AssetFolder _anyFolderInYourProject;
-    [SerializeField] Asset<Material> _anyMaterialInYourProject; // See Limitations section
-    [SerializeField] RawHeightmapAsset _anyRawHeightmapInYourProject;
-
-    // Runtime Assets are Resources, Streaming Assets, scenes
-    [SerializeField] RuntimeAsset _anyRuntimeAsset; 
-    [SerializeField] RuntimeFile _anyRuntimeFile;
-    [SerializeField] RuntimeFolder _anyRuntimeFolder;
-    [SerializeField] Runtime<Material> _anyRuntimeMaterial; // See Limitations section
-    [SerializeField] RawHeightmapRuntimeAsset _anyRawHeightmapRuntimeAsset; // Should have ".bytes" extension when in Resources
-
-    [SerializeField] Resource _anyResource;
-    [SerializeField] ResourceFile _anyResourceFile;
-    [SerializeField] ResourceFolder _anyResourceFolder;
-    [SerializeField] Resource<Material> _anyResourceMaterial; // See Limitations section
-    [SerializeField] TextResource _anyTextAssetResource;
-    [SerializeField] BinaryResource _anyBinaryResource; // Should have ".bytes" extension
-    [SerializeField] RawHeightmapResource _anyRawHeightmapResource; // Should have ".bytes" extension
-
-    [SerializeField] StreamingAsset _anyStreamingAsset;
-    [SerializeField] StreamingAssetFile _anyStreamingAssetFile;
-    [SerializeField] StreamingAssetFolder _anyStreamingAssetFolder;
-    [SerializeField] TextStreamingAsset _anyTextStreamingAsset;
-    [SerializeField] BinaryStreamingAsset _anyBinaryStreamingAsset;
-    [SerializeField] RawHeightmapStreamingAsset _anyStreamingAssetHeightmap;
-
-    [SerializeField] Scene _anySceneInYourProject;
-}
-```
-
-## Limitations
-
-### Unity version requirements
-
-**Unity 2021.2.18f1** or above is required because this package relies on both serialization of generic types and Editor-only fields support.
+There are additional properties and methods available for more specialized types.
 
 ---
-
-### Generics limitation
-
-E.g. `[SerializeField] List<Resource<Material>> _material;`.
-
-While Unity now supports generic type serialization and Editor-only fields, you can't use them this way. This code will fail with classic layout error:
-
-```
-A scripted object (probably <serialized object type>?) has a different serialization layout when loading. (Read <N> bytes but expected <M> bytes)
-Did you #ifdef UNITY_EDITOR a section of your serialized properties in any of your scripts?
-```
-
-Important notes:
-- sometimes the error doesn't exist
-- sometimes build crashes on startup with cryptic error.
-
-So the advice is to **not use generics within generics.**
-
-Suggested workarounds:
-- Either use non-generics, e.g. `[SerializeField] List<Resource>_material;`. 
-- or subclass a generic, e.g. `public class ResourceMaterial : Resource<Material> { }` and then use it `[SerializeField] List<ResourceMaterial> _material;`.
-
----
-
-### Other limitations:
-
-<details><summary><b>Asset validation</b></summary>
-
-`AnyPath`, `AnyFile`, `AnyFolder` and `RawHeightmapFile` are path-based. When they reference assets within your Unity project, and you move these assets, changes are not reflected.
-
-Suggested workaround: use any other available type that is asset-based.
-
-</details>
-
-<details><summary><b>Resources</b></summary>
-
-Unity doesn't use file extensions when loading Resources in runtime. This means that if you have e.g. `Text.md` and `Text.txt` files in the same folder, they both can coexist there but in runtime the path will be the same for both files.
-
-Suggested workaround:
-- Name your resources of the same type differently, or put them in a different folder.
-- For resources of different types with the same name, use generics, e.g. `[SerializeField] Resource<Material> _material;`, `[SerializeField] Resource<TextAsset> _textAsset;`
-
-</details>
-
-<details><summary><b>Streaming Assets</b></summary>
-
-#### Streaming Assets serialize differently
-
-When moving assets within Unity, you can lose references if you move them to and from `StreamingAssets` folder. This is because assets in that folder don't stay the same object as when outside of it.
-
-- When an object was referenced while stored outside `StreamingAssets` folder, and then is moved to that folder, the reference and the path survive.
-
-- When an object was referenced while stored inside `StreamingAssets` folder, and then is moved outside that folder - it's reference doesn't survive and paths don't change.
-
-- Exception is folders: they can be moved to and from StreamingAssets folder.
-
-#### Folder loading is not supported
-
-As some major platforms (Android and WebGL) don't allow the use of the .NET `File` API, listing files in folders is not supported, and bulk loading a folder is not possible. There are some known workarounds at least for Android, but they are not perfect, so this cannot be automated.
-
-</details>
-
-<details><summary><b>OnBeforeSerialize</b></summary>
-
-The main issue with a system like that is that it is convenient to reacct to moving and deleting assets in Unity, for which `OnBeforeSerialize` is used. Unity is not very open on what you may or you may not use in `OnBeforeSerialize`.
-
-The use of `AssetDatabase.GetAssetPath()` was avoided because it triggers the annoying `Objects are trying to be loaded during a domain backup. This is not allowed as it will lead to undefined behaviour!` error message but some `AssetDatabase` API is still used, so errors may return in some future Unity version.
-
-Suggested workaround: use `REFERENCE_ANY_PATH_NO_VALIDATION_BEFORE_SERIALIZATION` Scripting Define to remove the path check and restoration code.
-
-</details>
-
-<details><summary><b>PropertyDrawer</b></summary>
-
-Non-asset paths are validated in a thread, to avoid blocking the Editor UI thread for disc access. The validation starts when UI updates, and it synchronizes back when the thread completes, and when the state changes, it triggers the repaint of some Editor windows. While it should have no performance impact in most cases, there is the `REFERENCE_ANY_PATH_NO_ASYNC_CHECK_IN_INSPECTOR` Scripting Define for convenience that removes the parallel validation from `PropertyDrawer`. Note that only `AnyPath`, `AnyFile`, `AnyFolder` and `RawHeightmapFile` are affected, asset-based drawers won't benefit from this.
-
-</details>
 
 ## Installation
 
-- Via Unity Package Manager: press the plus sign and choose `Add package from git URL...`. There, use `https://github.com/vklubkov/UnityReferenceAnyPath.git`, or, with version: `https://github.com/vklubkov/UnityReferenceAnyPath#1.1.0`
-- You can also clone this repository and then add it as a local package using `Add package from disk...` option.
-- Another way is to manually edit the `manifest.json` file in your `Packages` folder. Add `"com.vklubkov.referenceanypath" : "https://github.com/vklubkov/UnityReferenceAnyPath.git"`, or, with version: `"com.vklubkov.referenceanypath" : "hhttps://github.com/vklubkov/UnityReferenceAnyPath.git#1.1.0"`
-- Alternatively, you can download the package into your `Assets` folder
+### Via Unity Package Manager
 
-## Usage
+Press the plus sign and select `Add package from git URL...`. There, use `https://github.com/vklubkov/UnityReferenceAnyPath.git`, or, with version: `https://github.com/vklubkov/UnityReferenceAnyPath#1.1.0`
+
+### Local package
+
+You can also clone this repository and then add it as a local package using `Add package from disk...` option.
+
+---
+
+## Documentation
+
+Path-based references, primarily for Editor use:
 
 <details><summary><b>AnyPath</b></summary>
 
@@ -217,9 +154,9 @@ public class AnyFolderExample : MonoBehaviour {
 
 </details>
 
-Path-based references, primarily for Editor use.
-
 ---
+
+Asset-based references, primarily for Editor use.
 
 <details><summary><b>Asset</b></summary>
 
@@ -300,9 +237,9 @@ public class AssetFolderExample : MonoBehaviour {
 
 </details>
 
-Asset-based references, primarily for Editor use.
-
 ---
+
+For any runtime assets: `Resources`, `StreamingAssets`, scenes.
 
 <details><summary><b>RuntimeAsset</b></summary>
 
@@ -384,9 +321,11 @@ public class RuntimeFolderExample : MonoBehaviour {
 
 </details>
 
-A type to hold any runtime assets: Resources, StreamingAssets or scenes.
+
 
 ---
+
+For storing resource references. Can be used at runtime. Plus, there are resource loading methods available that replicate the methods of the `Resources` class
 
 <details><summary><b>Resource</b></summary>
 
@@ -656,9 +595,9 @@ public class BinaryResourceExample : MonoBehaviour {
 
 </details>
 
-Reference any Resources. A path is exposed for runtime, plus there are  loading methods available that replicated the methods of Resources class .
-
 ---
+
+For referencing assets in the `StreamingAssets` folder. Can be used in runtime.
 
 <details><summary><b>StreamingAsset</b></summary>
 
@@ -880,9 +819,9 @@ public class BinaryStreamingAssetExample : MonoBehaviour {
 
 </details>
 
-Allows you to reference assets in the StreamingAssets folder.
-
 ---
+
+For referencing scenes. Exposes the scene path and the scene name for use in runtime.
 
 <details><summary><b>Scene</b></summary>
 
@@ -941,9 +880,9 @@ public class SceneExample : MonoBehaviour {
 
 </details>
 
-A simple implementation of scene references. Exposes scene path and scene name for use in runtime.
-
 ---
+
+Raw heightmaps are used by Unity Terrains, but Unity doesn't have a proper type to reference them. This is an attempt to create one. Besides referencing the file itself, it also allows you to input some additional data required for a heightmap to be properly parsed: Width, Height, Bits, ByteOrder and Flip properties. Note that there is no validation of these values.
 
 <details><summary><b>RawHeightmapFile</b></summary>
 
@@ -972,7 +911,6 @@ public class RawHeightmapFileExample : MonoBehaviour {
 
 </details>
 
-
 <details><summary><b>RawHeightmapAsset</b></summary>
 
 ![RawHeightmapAsset](.github/RawHeightmapAsset.png)
@@ -1000,7 +938,6 @@ public class RawHeightmapAssetExample : MonoBehaviour {
 
 </details>
 
-
 <details><summary><b>RawHeightmapRuntimeAsset</b></summary>
 
 ![RawHeightmapRuntimeAsset](.github/RawHeightmapRuntimeAsset.png)
@@ -1027,7 +964,6 @@ public class RawHeightmapRuntimeAssetExample : MonoBehaviour {
 ```
 
 </details>
-
 
 <details><summary><b>RawHeightmapResource</b></summary>
 
@@ -1187,13 +1123,11 @@ public class RawHeightmapStreamingAssetExample : MonoBehaviour {
 ```
 </details>
 
-Unity terrains utilize raw heightmaps but Unity doesn't have a proper type for them. This is an attempt to create one. Besides referencing the file itself, it also stores some additional data required for a heightmap to be properly parsed: Width, Height, Bits, ByteOrder and Flip properties. Note that these types only store the data, they don't do any parsing.
-
 ---
 
 ### Extensions
 
-You can restrict file types even further by adding a list of extensions. `,` and ` ` can be used as list separators. This is not supported for folders, and not supported for generics (as restriction is already applied via generic parameter).
+You can restrict file references even further by adding a list of extensions. `,` and ` ` can be used as separators. This is not supported for folders and not supported for generics (as restrictions are already applied via generic parameter).
 
 ---
 
@@ -1204,7 +1138,7 @@ You can restrict file types even further by adding a list of extensions. `,` and
 - `Path` - runtime path for use in runtime/builds
 - `PathUnsafe` - unsafe version for convenience
 
-Unsafe path is the "packed" version of the path that Unity actually serializes. The reason for this is that unity `SerializedProperty` doesn't distinguish between `null` and empty strings and stores them as empty. But empty string is a valid path for a folder in various cases (e.g., Resources or Asset folder). So to overcome this limitation, this info is "packed" into the serialized path:
+Unsafe path is the "packed" version of the path that Unity actually serializes. The reason for this is that unity `SerializedProperty` doesn't distinguish between `null` and empty strings and stores them as empty. But the empty string is a valid path for a folder in various cases (e.g., `Resources` or `Assets` folder). So to overcome this limitation, this info is "packed" into the serialized path:
 
 | PathUnsafe | Path      |
 |------------|-----------|
@@ -1212,7 +1146,7 @@ Unsafe path is the "packed" version of the path that Unity actually serializes. 
 | "."        | ""        |
 | some path  | some path |
 
-`Path` unpacks the data, `PathUnsafe` enables access to the original value.
+`Path` unpacks the data, `PathUnsafe` gives access to the actual value.
 
 #### Editor-only
 
@@ -1234,7 +1168,9 @@ Unsafe methods simply return what is stored in a property; packing is the same a
 
 ### Interfaces
 
-<details><summary>Runtime types feature a comprehensive set of interfaces:</summary>
+Runtime types feature a comprehensive set of interfaces. This is especially useful for Dependency Injection. But you can use them whenever you see fit.
+
+<details><summary>Runtime interfaces</summary>
 
 ```csharp
 #if UNITY_EDITOR
@@ -1392,6 +1328,94 @@ Unsafe methods simply return what is stored in a property; packing is the same a
 
 ---
 
+## Limitations
+
+### 1. Unity version requirements
+
+**Unity 2021.2.18f1** or above is required because this package relies on both serialization of generic types and Editor-only fields support.
+
+### 2. Generics within generics
+
+E.g. `[SerializeField] List<Resource<Material>> _material;`.
+
+While Unity now supports generic type serialization and Editor-only fields, you can't use them this way. This code will fail with the classic layout error:
+
+```
+A scripted object (probably <serialized object type>?) has a different serialization layout when loading. (Read <N> bytes but expected <M> bytes)
+Did you #ifdef UNITY_EDITOR a section of your serialized properties in any of your scripts?
+```
+
+Important note: this error is somewhat random, sometimes the built application gives you the error, sometimes not, sometimes the build crashes on startup with a more cryptic error.
+
+So the advice is to **not use generics within generics.**
+
+Suggested workarounds:
+- Either use non-generics, e.g. `[SerializeField] List<Resource>_material;`.
+- or subclass a generic, e.g. `public class ResourceMaterial : Resource<Material> { }` and then use it instead: `[SerializeField] List<ResourceMaterial> _material;`.
+
+### 3. Path limitations
+
+**Reference Any Path** is designed to store the relative path. The absolute path is recreated from it via the [Path](https://learn.microsoft.com/en-us/dotnet/api/system.io.path) API. Windows-only paths are not properly supported by this API on other platforms, so you should likely avoid the use of UNC paths (e.g. `//server/share`), as well as `//./` and `//?/` path prefixes.
+
+In addition, pointing to another drive on Windows will result in a platform-specific absolute path that will make no sense on other systems, and even on Windows itself where no such drive exists. So I consider all these paths as platform-specific and don't treat them in any special way, except some minor workarounds for inconsistent behavior of the Path API.
+
+Also, `file://`-prefixed paths aren't supported.
+
+### 4. Other limitations:
+
+<details><summary><b>Asset validation</b></summary>
+
+`AnyPath`, `AnyFile`, `AnyFolder` and `RawHeightmapFile` are path-based. When they reference assets within your Unity project, and you move these assets, changes are not reflected.
+
+Suggested workaround: use any other available type that is asset-based.
+
+</details>
+
+<details><summary><b>Resources</b></summary>
+
+Unity doesn't use file extensions when loading Resources in runtime. This means that if you have e.g. `Text.md` and `Text.txt` files in the same folder, they both can coexist there but in runtime the path will be the same for both files.
+
+Suggested workaround:
+- Name your resources of the same type differently or put them in separate folders.
+- For resources of different types with the same name, use generics, e.g. `[SerializeField] Resource<Material> _material;`, `[SerializeField] Resource<TextAsset> _textAsset;` etc.
+
+</details>
+
+<details><summary><b>Streaming Assets</b></summary>
+
+#### Streaming Assets serialize differently
+
+When moving assets within Unity, you can lose references if you move them to and from `StreamingAssets` folder. This is because assets in that folder don't stay the same object as when they are outside it:
+- when an object is referenced while outside the `StreamingAssets` folder, and then is moved to that folder, the reference and the path survive.
+
+- When an object is referenced while inside the `StreamingAssets` folder, and then is moved outside that folder - its reference does not survive and its paths don't change.
+
+- The exception is folders: they can be moved to and from `StreamingAssets` without any issues.
+
+#### Folder loading is not supported
+
+As some major platforms (Android and WebGL) don't allow the use of the .NET `File` API, listing files in folders is not supported, and bulk loading a folder is not possible. There are some known workarounds, at least for Android, but they are far from being perfect.
+
+</details>
+
+<details><summary><b>OnBeforeSerialize</b></summary>
+
+**Reference Any Path** uses `AssetDatabase` to validate asset-based paths, and also handles moved or deleted files automatically. This is done in `OnBeforeSerialize` which is a somewhat special method, and
+Unity is not very transparent on what you may or may not use there.
+
+`AssetDatabase.GetAssetPath()` can't be used there, as it triggers the annoying `Objects are trying to be loaded during a domain backup. This is not allowed as it will lead to undefined behaviour!` error message. So the workaround is to use few other `AssetDatabase` API methods that don't trigger any errors. But I can imagine errors returning in some future Unity versions. So,
+**Reference Any Path** provides the `REFERENCE_ANY_PATH_NO_VALIDATION_BEFORE_SERIALIZATION` Scripting Define to remove the path check and the restoration code from `OnBeforeSerialize`.
+
+</details>
+
+<details><summary><b>PropertyDrawer</b></summary>
+
+Non-asset paths are validated in a thread to avoid blocking the Editor UI with disc access. The validation starts when the UI updates, and it synchronizes back when the thread completes. When the path validation state changes, it triggers the repaint of some Editor windows. While the performance impact is minor, there is the `REFERENCE_ANY_PATH_NO_ASYNC_CHECK_IN_INSPECTOR` Scripting Define that removes the parallel validation from `PropertyDrawer`. Note that only `AnyPath`, `AnyFile`, `AnyFolder` and `RawHeightmapFile` are affected by this. Asset-based paths are validated synchronously via Unity APIs.
+
+</details>
+
+---
+
 ### Scripting defines
 
 - REFERENCE_ANY_PATH_NO_VALIDATION_BEFORE_SERIALIZATION — removes path check and restoration code from `OnBeforeSerialize`.
@@ -1400,10 +1424,11 @@ Unsafe methods simply return what is stored in a property; packing is the same a
 
 - REFERENCE_ANY_PATH_FORCE_UNITASK — forces the use of UniTask for async/parallel operations. Only enable it if you have UniTask in your project. Also, I would probably suggest not using this at all, unless you have performance issues or some other issues with the tasks.
 
+---
 
 ## License
 
-[MIT](LICENSE.md)
+### [MIT](LICENSE.md)
 
 ```
 Copyright (c) 2024-2025 Vladimir Klubkov
@@ -1427,9 +1452,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-[Third Party Notices](Third%20Party%20Notices.md)
+### [Third Party Notices](Third%20Party%20Notices.md)
 
-Package was inspired by (and thus may contain some similarities to) [UnityResourceReference](https://github.com/paulhayes/UnityResourceReference) by Paul Hayes, distributed under MIT license:
+Package was inspired by (and thus may contain some similarities to) [UnityResourceReference](https://github.com/paulhayes/UnityResourceReference) by Paul Hayes, also distributed under MIT license:
 
 ```
 The MIT License (MIT)
