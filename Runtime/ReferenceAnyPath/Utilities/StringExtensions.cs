@@ -157,7 +157,7 @@ namespace ReferenceAnyPath {
 
             if (assetPath.StartsWith(_assets)) {
                 if (assetPath.Length == _assets.Length)
-                    return "."; // Assets folder itself
+                    return string.Empty; // Assets folder itself
 
                 assetPath = assetPath.Remove(0, _assets.Length);
                 if (!assetPath.StartsWith('/'))
@@ -202,17 +202,58 @@ namespace ReferenceAnyPath {
         public static string GetRelativePathFromAbsolutePath(this string absolutePath) =>
             string.IsNullOrEmpty(absolutePath) ? null : absolutePath.GetRelativePath();
 
-        static string GetRelativePath(this string path) =>
-            Path.GetRelativePath(Application.dataPath, path).ApplyUnitySeparators();
+        static string GetRelativePath(this string path) {
+            try {
+                return Path.GetRelativePath(Application.dataPath, path).ApplyUnitySeparators();
+            }
+            catch (ArgumentException e) {
+                // On non-Windows platforms, invalid UNC paths throw
+                // while valid UNC-paths are considered UNIX-paths.
+                // The code below converts invalid UNC paths into UNIX-paths.
+#if !UNITY_EDITOR_WIN && !UNITY_STANDALONE_WIN && !UNITY_WSA && !UNITY_WSA_10_0
+                if (e.Message.Contains("UNC")) {
+                    path = path.Remove(0, 1);
+                    return path.ApplyUnitySeparators();
+                }
+#endif
+                throw;
+            }
+        }
 
-        public static string GetAbsolutePathFromRelativePath(this string relativePath) =>
-            string.IsNullOrEmpty(relativePath) ? null : relativePath.GetFullPath();
+        public static string GetAbsolutePathFromRelativePath(this string relativePath) {
+            if (relativePath == null)
+                return null;
 
-        static string GetFullPath(this string path) {
-            if (Path.IsPathRooted(path))
-                return path;
+            if (relativePath.Length == 0)
+                return Path.GetFullPath(Application.dataPath).ApplyUnitySeparators();
 
-            return Path.GetFullPath(Application.dataPath + "/" + path).ApplyUnitySeparators();
+            if (!Path.IsPathRooted(relativePath))
+                return Path.GetFullPath(Application.dataPath + "/" + relativePath).ApplyUnitySeparators();
+
+            var absolutePath = relativePath.GetAbsolutePathFromRootedPath();
+            while (absolutePath.Length > 1 && absolutePath.EndsWith('/'))
+                absolutePath = absolutePath[..^1];
+
+            return absolutePath;
+        }
+
+        static string GetAbsolutePathFromRootedPath(this string rootedPath) {
+            try {
+                return Path.GetFullPath(rootedPath).ApplyUnitySeparators();
+            }
+            catch (ArgumentException e) {
+                // On non-Windows platforms, invalid UNC paths throw
+                // while valid UNC-paths are considered UNIX-paths.
+                // The code below converts invalid UNC paths into UNIX-paths.
+#if !UNITY_EDITOR_WIN && !UNITY_STANDALONE_WIN && !UNITY_WSA && !UNITY_WSA_10_0
+                if (e.Message.Contains("UNC")) {
+                    rootedPath = rootedPath.Remove(0, 1);
+                    return Path.GetFullPath(rootedPath).ApplyUnitySeparators();
+                }
+#endif
+
+                throw;
+            }
         }
 
         public static string GetParentPath(this string path) =>
@@ -245,23 +286,40 @@ namespace ReferenceAnyPath {
                 : streamingAssetsPath + '/' + path;
         }
 
-        // Pack/unpack paths that cannot be "current directory" paths
-        public static string PackPathSimple(this string filePath) => filePath ?? string.Empty;
-        public static string UnpackPathSimple(this string filePath) => string.IsNullOrEmpty(filePath) ? null : filePath;
+        // Pack/unpack paths that cannot be "current directory" paths (e.g. files)
+        public static string PackPathSimple(this string filePath) {
+            if (filePath == null)
+                return string.Empty;
 
-        // Pack/unpack paths that can be "current directory" paths
-        public static string PackPathComplex(this string folderPath) =>
-            folderPath == null
-                ? string.Empty
-                : string.IsNullOrEmpty(folderPath)
-                    ? "."
-                    : folderPath;
+            return filePath;
+        }
 
-        public static string UnpackPathComplex(this string folder) =>
-            string.IsNullOrEmpty(folder)
-                ? null
-                : folder == "."
-                    ? string.Empty
-                    : folder;
+        public static string UnpackPathSimple(this string filePath) {
+            if (string.IsNullOrEmpty(filePath))
+                return null;
+
+            return filePath;
+        }
+
+        // Pack/unpack paths that can be "current directory" paths (e.g. folders)
+        public static string PackPathComplex(this string folderPath) {
+            if (folderPath == null)
+                return string.Empty;
+
+            if (folderPath.Length == 0)
+                return ".";
+
+            return folderPath;
+        }
+
+        public static string UnpackPathComplex(this string folderPath) {
+            if (string.IsNullOrEmpty(folderPath))
+                return null;
+
+            if (folderPath == ".")
+                return string.Empty;
+
+            return folderPath;
+        }
     }
 }

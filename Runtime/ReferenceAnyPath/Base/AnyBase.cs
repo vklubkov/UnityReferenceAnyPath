@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 namespace ReferenceAnyPath {
     [Serializable]
@@ -7,9 +8,7 @@ namespace ReferenceAnyPath {
         public override string Path => PathUnsafe.UnpackPathComplex();
 
 #if UNITY_EDITOR
-        // ReSharper disable UnusedMember.Local because it is used in PropertyDrawer
-        [SerializeField] string _extensions = string.Empty;
-        // ReSharper restore UnusedMember.Local
+        [SerializeField, Preserve] string _extensions = string.Empty;
 
         public override string RelativePath {
             get {

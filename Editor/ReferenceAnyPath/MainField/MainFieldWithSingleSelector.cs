@@ -30,12 +30,12 @@ namespace ReferenceAnyPath {
 
             var dropPath = _dropArea.DetectDrop(Layout, Validator);
             if (dropPath != null) {
-                inputProperty.stringValue = dropPath;
+                inputProperty.stringValue = dropPath.PackPathComplex();
                 hasChanges = true;
             }
 
             if (GUI.Button(Layout.SelectorRect, _selectorLabel)) {
-                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathSimple();
+                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathComplex();
                 var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
                 OpenDialog.Open(absolutePath);
             }

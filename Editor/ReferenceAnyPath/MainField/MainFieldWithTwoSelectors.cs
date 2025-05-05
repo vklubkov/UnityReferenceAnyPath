@@ -38,18 +38,18 @@ namespace ReferenceAnyPath {
 
             var dropPath = _dropArea.DetectDrop(Layout, Validator);
             if (dropPath != null) {
-                inputProperty.stringValue = dropPath;
+                inputProperty.stringValue = dropPath.PackPathComplex();
                 hasChanges = true;
             }
 
             if (GUI.Button(Layout.FileSelectorRect, _fileSelectorLabel)) {
-                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathSimple();
+                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathComplex();
                 var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
                 _openFileDialog.Open(absolutePath);
             }
 
             if (GUI.Button(Layout.FolderSelectorRect, _folderSelectorLabel)) {
-                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathSimple();
+                var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathComplex();
                 var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
                 _openFolderDialog.Open(absolutePath);
             }

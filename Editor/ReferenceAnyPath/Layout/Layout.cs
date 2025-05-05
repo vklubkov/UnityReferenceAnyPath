@@ -16,7 +16,7 @@ namespace ReferenceAnyPath {
         const float _foldoutOffset = 0f;
 #endif
 
-        readonly static RectOffset _descriptionLabelPadding = new(5, 5, 0, 0);
+        static readonly RectOffset _descriptionLabelPadding = new(5, 5, 0, 0);
 
         GUIContent _label;
 

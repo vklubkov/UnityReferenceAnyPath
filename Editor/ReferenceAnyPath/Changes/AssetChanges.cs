@@ -7,7 +7,7 @@ namespace ReferenceAnyPath {
             var inputProperty = Property.MainProperty;
             var newObject = inputProperty.objectReferenceValue;
             if (newObject == null) {
-                SetProperties(null, null, null, null, null);
+                SetProperties(null, null, null, null);
                 return;
             }
 
@@ -21,16 +21,12 @@ namespace ReferenceAnyPath {
                 return;
 
             var runtimePath = assetPath.GetRuntimePathFromAssetPath();
-            SetProperties(newObject, relativePath, absolutePath, assetPath, runtimePath);
+            SetProperties(newObject, relativePath, assetPath, runtimePath);
         }
 
-        void SetProperties(
-            UnityObject @object,
-            string relativePath,
-            string absolutePath,
-            string assetPath,
-            string runtimePath) {
+        void SetProperties(UnityObject @object, string relativePath, string assetPath, string runtimePath) {
             Property.SetObject(PropertyName._object, @object);
+
             var path = relativePath.PackPathComplex();
             Property.SetString(PropertyName._path, path);
             Property.SetString(PropertyName._relativePath, path);
