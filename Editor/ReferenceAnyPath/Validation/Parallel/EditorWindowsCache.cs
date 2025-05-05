@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ReferenceAnyPath {
     public static class EditorWindowsCache {
-        readonly static List<EditorWindow> _editorWindows = new();
+        static readonly List<EditorWindow> _editorWindows = new();
         static double _nextUpdateTime;
         
         public static void Repaint() {
@@ -29,7 +29,7 @@ namespace ReferenceAnyPath {
                 var windowName = editorWindow.GetType().Name;
 
                 switch (windowName) {
-                    // Exclude most common windows where custom properties can't be drawn
+                    // Exclude the most common windows where custom properties can't be drawn
                     case "InspectorDebugWindow": // Doesn't use custom property drawers
                     case "SceneView":
                     case "GameView":

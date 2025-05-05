@@ -9,7 +9,8 @@ namespace ReferenceAnyPath {
             var absolutePath = inputPath.GetAbsolutePathFromRelativePath();
             var relativePath = absolutePath.GetRelativePathFromAbsolutePath();
             var assetPath = absolutePath.GetAssetPathFromAbsolutePath();
-            if (!Validator.IsValidAsset(Validator.Extensions, assetPath)) {
+            if (!IsValidPath(absolutePath) ||
+                !Validator.IsValidAsset(Validator.Extensions, assetPath) ) {
                 SetProperties(relativePath, assetPath, null);
                 return;
             }

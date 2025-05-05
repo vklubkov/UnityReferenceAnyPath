@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ReferenceAnyPath {
     public abstract class OpenDialog {
-        readonly static Dictionary<string, string> _results = new();
+        static readonly Dictionary<string, string> _results = new();
 
         string _propertyId;
 
