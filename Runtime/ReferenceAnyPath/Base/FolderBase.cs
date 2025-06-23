@@ -9,16 +9,16 @@ namespace ReferenceAnyPath {
         public override string RelativePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathComplex();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesPathExist() ? unpackedRelativePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesPathExist() ? unpackedRelativePath : null;
             }
         }
 
         public override string AbsolutePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathComplex();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesPathExist() ? absolutePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesPathExist() ? unpackedAbsolutePath : null;
             }
         }
 

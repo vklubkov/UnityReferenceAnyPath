@@ -11,17 +11,17 @@ namespace ReferenceAnyPath {
                 return;
             }
 
-            var assetPath = AssetDatabase.GetAssetPath(newObject);
-            if (!Validator.IsValidAsset(Validator.Extensions, assetPath))
+            var unpackedAssetPath = AssetDatabase.GetAssetPath(newObject);
+            if (!Validator.IsValidAsset(Validator.Extensions, unpackedAssetPath))
                 return;
 
-            var relativePath = assetPath.GetRelativePathFromAssetPath();
-            var absolutePath = relativePath.GetAbsolutePathFromRelativePath();
-            if (!IsValidPath(absolutePath))
+            var unpackedRelativePath = unpackedAssetPath.GetRelativePathFromAssetPath();
+            var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+            if (!IsValidPath(unpackedAbsolutePath))
                 return;
 
-            var runtimePath = assetPath.GetRuntimePathFromAssetPath();
-            SetProperties(newObject, relativePath, assetPath, runtimePath);
+            var unpackedRuntimePath = unpackedAssetPath.GetRuntimePathFromAssetPath();
+            SetProperties(newObject, unpackedRelativePath, unpackedAssetPath, unpackedRuntimePath);
         }
 
         void SetProperties(UnityObject @object, string relativePath, string assetPath, string runtimePath) {

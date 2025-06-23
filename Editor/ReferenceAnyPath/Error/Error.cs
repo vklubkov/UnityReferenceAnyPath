@@ -14,14 +14,14 @@ namespace ReferenceAnyPath {
                     return true;
 
                 var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                if (string.IsNullOrEmpty(absolutePath)) {
-                    var path = Property.GetString(PropertyName._path).UnpackPathComplex();
-                    return !string.IsNullOrEmpty(path);
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                if (string.IsNullOrEmpty(unpackedAbsolutePath)) {
+                    var unpackedPath = Property.GetString(PropertyName._path).UnpackPathComplex();
+                    return !string.IsNullOrEmpty(unpackedPath);
                 }
 
-                var assetPath = Property.GetString(PropertyName._assetPath).UnpackPathSimple();
-                return IsInvalidPath(absolutePath, assetPath);
+                var unpackedAssetPath = Property.GetString(PropertyName._assetPath).UnpackPathSimple();
+                return IsInvalidPath(unpackedAbsolutePath, unpackedAssetPath);
             }
         }
 

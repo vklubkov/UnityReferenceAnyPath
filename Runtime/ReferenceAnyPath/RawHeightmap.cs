@@ -38,16 +38,16 @@ namespace ReferenceAnyPath {
         public override string RelativePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? unpackedRelativePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedRelativePath : null;
             }
         }
 
         public override string AbsolutePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? absolutePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedAbsolutePath : null;
             }
         }
 
@@ -108,16 +108,16 @@ namespace ReferenceAnyPath {
         public override string RelativePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? unpackedRelativePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedRelativePath : null;
             }
         }
 
         public override string AbsolutePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? absolutePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedAbsolutePath : null;
             }
         }
 
@@ -181,16 +181,16 @@ namespace ReferenceAnyPath {
         public override string RelativePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? unpackedRelativePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedRelativePath : null;
             }
         }
 
         public override string AbsolutePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? absolutePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedAbsolutePath : null;
             }
         }
 
@@ -254,16 +254,16 @@ namespace ReferenceAnyPath {
         public override string RelativePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? unpackedRelativePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedRelativePath : null;
             }
         }
 
         public override string AbsolutePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? absolutePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedAbsolutePath : null;
             }
         }
 
@@ -349,16 +349,16 @@ namespace ReferenceAnyPath {
         public override string RelativePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? unpackedRelativePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedRelativePath : null;
             }
         }
 
         public override string AbsolutePath {
             get {
                 var unpackedRelativePath = RelativePathUnsafe.UnpackPathSimple();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                return absolutePath.DoesFileExist() ? absolutePath : null;
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                return unpackedAbsolutePath.DoesFileExist() ? unpackedAbsolutePath : null;
             }
         }
 

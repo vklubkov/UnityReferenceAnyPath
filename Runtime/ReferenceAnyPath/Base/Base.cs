@@ -18,7 +18,14 @@ namespace ReferenceAnyPath {
         public string RelativePathUnsafe => _relativePath;
 
         public abstract string AbsolutePath { get; }
-        public string AbsolutePathUnsafe => RelativePathUnsafe.GetAbsolutePathFromRelativePath().PackPathSimple();
+
+        public string AbsolutePathUnsafe {
+            get {
+                var relativePathUnpacked = RelativePathUnsafe.UnpackPathComplex();
+                var absolutePathUnpacked = relativePathUnpacked.GetAbsolutePathFromRelativePath();
+                return absolutePathUnpacked.PackPathSimple();
+            }
+        }
 
         public abstract string AssetPath { get; }
         public string AssetPathUnsafe => _assetPath;

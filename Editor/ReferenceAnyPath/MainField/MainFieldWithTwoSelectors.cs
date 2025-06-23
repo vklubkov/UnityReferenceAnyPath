@@ -44,14 +44,14 @@ namespace ReferenceAnyPath {
 
             if (GUI.Button(Layout.FileSelectorRect, _fileSelectorLabel)) {
                 var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathComplex();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                _openFileDialog.Open(absolutePath);
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                _openFileDialog.Open(unpackedAbsolutePath);
             }
 
             if (GUI.Button(Layout.FolderSelectorRect, _folderSelectorLabel)) {
                 var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathComplex();
-                var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
-                _openFolderDialog.Open(absolutePath);
+                var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+                _openFolderDialog.Open(unpackedAbsolutePath);
             }
 
             if (hasChanges && inputProperty.stringValue == originalPath)

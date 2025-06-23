@@ -5,18 +5,18 @@ namespace ReferenceAnyPath {
             var input = inputProperty.stringValue.ApplyUnitySeparators();
             Property.SetString(PropertyName._path, input);
 
-            var inputPath = input.UnpackPathComplex();
-            var absolutePath = inputPath.GetAbsolutePathFromRelativePath();
-            var relativePath = absolutePath.GetRelativePathFromAbsolutePath();
-            var assetPath = absolutePath.GetAssetPathFromAbsolutePath();
-            if (!IsValidPath(absolutePath) ||
-                !Validator.IsValidAsset(Validator.Extensions, assetPath) ) {
-                SetProperties(relativePath, assetPath, null);
+            var unpackedInputPath = input.UnpackPathComplex();
+            var unpackedAbsolutePath = unpackedInputPath.GetAbsolutePathFromRelativePath();
+            var unpackedRelativePath = unpackedAbsolutePath.GetRelativePathFromAbsolutePath();
+            var unpackedAssetPath = unpackedAbsolutePath.GetAssetPathFromAbsolutePath();
+            if (!IsValidPath(unpackedAbsolutePath) ||
+                !Validator.IsValidAsset(Validator.Extensions, unpackedAssetPath) ) {
+                SetProperties(unpackedRelativePath, unpackedAssetPath, null);
                 return;
             }
 
-            var runtimePath = assetPath.GetRuntimePathFromAssetPath();
-            SetProperties(relativePath, assetPath, runtimePath);
+            var unpackedRuntimePath = unpackedAssetPath.GetRuntimePathFromAssetPath();
+            SetProperties(unpackedRelativePath, unpackedAssetPath, unpackedRuntimePath);
         }
 
         void SetProperties(string relativePath, string assetPath, string runtimePath) {

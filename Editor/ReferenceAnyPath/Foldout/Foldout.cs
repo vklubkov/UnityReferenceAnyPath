@@ -47,9 +47,9 @@ namespace ReferenceAnyPath {
 
         protected void DrawDefaultInfo() {
             var unpackedRelativePath = Property.GetString(PropertyName._relativePath).UnpackPathComplex();
-            var absolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
+            var unpackedAbsolutePath = unpackedRelativePath.GetAbsolutePathFromRelativePath();
             DrawInfo(_relativePathPrefix, unpackedRelativePath);
-            DrawInfo(_absolutePathPrefix, absolutePath);
+            DrawInfo(_absolutePathPrefix, unpackedAbsolutePath);
             DrawInfo(_assetPathPrefix, Property.GetString(PropertyName._assetPath).UnpackPathSimple());
             DrawInfo(_runtimePathPrefix, Property.GetString(PropertyName._runtimePath).UnpackPathComplex());
         }
