@@ -21,6 +21,8 @@ namespace ReferenceAnyPath {
         bool DrawDimensionsInput() {
             Layout.NextLine();
 
+            using var _ = new TemporaryIndentLevel(indentLevel: 0);
+
             EditorGUI.LabelField(Layout.WidthLabelRect, _widthLabel);
             var widthProperty = Property.GetProperty(PropertyName._width);
             var originalWidth = widthProperty.intValue;

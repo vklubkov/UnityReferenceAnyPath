@@ -19,7 +19,7 @@ namespace ReferenceAnyPath {
             EditorGUI.PropertyField(Layout.InfoRect, extensionsProperty, Layout.EmptyGuiContent);
             var hasChanges = originalExtensions != extensionsProperty.stringValue;
             if (string.IsNullOrEmpty(extensionsProperty.stringValue))
-                EditorGUI.LabelField(Layout.InfoValueRect, _extensionsPlaceholder, Layout.PlaceholderStyle);
+                EditorGUI.LabelField(Layout.InfoRect, null, _extensionsPlaceholder, Layout.PlaceholderStyle);
 
             return hasChanges;
         }

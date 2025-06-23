@@ -50,6 +50,7 @@ namespace ReferenceAnyPath {
                     // ReSharper disable once UseObjectOrCollectionInitializer to avoid losing settings
                     _placeholderStyle = new(EditorStyles.label) {
                         padding = _descriptionLabelPadding,
+                        alignment = TextAnchor.MiddleLeft,
                         wordWrap = false,
                     };
 
